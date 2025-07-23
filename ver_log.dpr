@@ -1,0 +1,196 @@
+program ver_log;
+
+{$APPTYPE CONSOLE}
+
+{$R *.res}
+
+uses
+  System.SysUtils;
+var opcaoMenu2: String;
+const userAdmin: String = '123';
+      senhaAdmin: String = '123';
+
+procedure MostrarMenu;
+begin
+   Writeln('------- MENU -------');
+  Writeln('| 1 - Realizar Login |');
+  Writeln('| 2 - Sair           |');
+   Writeln('--------------------');
+  Writeln('Digite uma opção');
+end;
+
+procedure MostrarMenu2;
+begin
+   Writeln('------- SISTEMA RP -------');
+  Writeln('| 1 - Sistema Erp          |');
+  Writeln('| 2 - Seja Um Credenciado  |');
+  Writeln('| 3 - Sobre Nós            |');
+  Writeln('| 4 - Sair                 |');
+   Writeln('--------------------------');
+  Writeln('Digite uma opção');
+end;
+
+procedure MostrarServicos;
+begin
+   Writeln('--------- ERP ----------');
+  Writeln('| 1 - Seja um usuário RP |');
+  Writeln('| 2 - Clientes RP        |');
+  Writeln('| 3 - Sair               |');
+   Writeln('------------------------');
+  Writeln('Digite uma opção');
+end;
+
+procedure MostrarCredenciado;
+begin
+   Writeln('----------- ERP ------------');
+  Writeln('| 1 - Enviar Pedido           |');
+  Writeln('| 2 - Competencias necessarias|');
+  Writeln('| 3 - Sair                    |');
+   Writeln('----------------------------- ');
+  Writeln('Digite uma opção');
+end;
+
+procedure EscreverDevagar(const Texto: string; Velocidade: Integer = 30);
+var
+  i: Integer;
+begin
+  for i := 1 to Length(Texto) do
+  begin
+    Write(Texto[i]);
+    Sleep(Velocidade); // milissegundos entre letras (30 = rápido, 80 = lento)
+  end;
+  Writeln; // pular para próxima linha
+end;
+
+procedure MostrarSobreNos;
+begin
+  EscreverDevagar('---------------- SOBRE NÓS ----------------');
+  EscreverDevagar('Desde 1991, a RP INFO fornece as melhores ferramentas de gestão para seus clientes.');
+  EscreverDevagar('');
+  EscreverDevagar('Nossos sistemas integram com extrema flexibilidade informações de frente de loja com a retaguarda administrativa,');
+  EscreverDevagar('possibilitando tomadas de decisões ágeis, seguras e adequadas à realidade do mercado.');
+  EscreverDevagar('');
+  EscreverDevagar('Profissionais capacitados para implementação do sistema, atendimento e suporte.');
+  EscreverDevagar('');
+  EscreverDevagar('A experiência da RP se reflete na maneira de implementar suas soluções para o cliente.');
+  EscreverDevagar('Buscamos um padrão de excelência e satisfação, com metodologia própria de implantação que garante agilidade e segurança.');
+  EscreverDevagar('');
+  EscreverDevagar('• Presença em mais de 3.000 supermercados e 20.000 checkouts.');
+  EscreverDevagar('• Mais de 78.000 usuários por dia.');
+  EscreverDevagar('• Processamento de 60 bilhões de reais em vendas por ano.');
+  EscreverDevagar('• Atuação em todo o território nacional e expansão para outros países.');
+  EscreverDevagar('• Centro de capacitação presencial/online e treinamentos para clientes.');
+  EscreverDevagar('• Flexibilidade para diversos segmentos do varejo:');
+  EscreverDevagar('  Farmácias, Panificadoras, Restaurantes, Postos de Combustíveis, Pet Shops, entre outros.');
+  EscreverDevagar('• Excelência no planejamento e execução em cada etapa dos nossos serviços.');
+  EscreverDevagar('');
+  EscreverDevagar('Missão:');
+  EscreverDevagar('Desenvolver, comercializar e dar suporte personalizado de soluções eficientes e flexíveis');
+  EscreverDevagar('para o varejo e atacado, com equipes especializadas em todas as regiões do Brasil,');
+  EscreverDevagar('gerando valor perceptível e mensurável aos clientes, parceiros, colaboradores e à sociedade.');
+  EscreverDevagar('');
+  EscreverDevagar('Valores:');
+  EscreverDevagar('- Compromisso com os resultados dos clientes;');
+  EscreverDevagar('- Flexibilidade com responsabilidade;');
+  EscreverDevagar('- Relações baseadas em respeito e confiança;');
+  EscreverDevagar('- Inovação e consistência nas soluções;');
+  EscreverDevagar('- Valorização e desenvolvimento pessoal e profissional.');
+  EscreverDevagar('');
+  EscreverDevagar('Visão:');
+  EscreverDevagar('Crescer e evoluir continuamente, sendo o melhor parceiro dos nossos clientes, colaboradores e sociedade.');
+  EscreverDevagar('--------------------------------------------');
+end;
+
+function InteragirMenu2():String;
+begin
+  MostrarMenu2;
+  Readln(opcaoMenu2);
+
+  if (opcaoMenu2 = '1') then begin
+    MostrarServicos;
+    ReadLn;
+  end
+  else if (opcaoMenu2 = '2') then begin
+  MostrarCredenciado;
+  ReadLn;
+  end
+  else if (opcaoMenu2 = '3') then begin
+  MostrarSobreNos;
+  ReadLn;
+  end
+  else if (opcaoMenu2 = '4') then begin
+   Halt;
+  end else begin
+  Writeln('Opção invalida');
+  end;
+end;
+
+
+function LoginValido(Usuario, Senha: String): Boolean;
+begin
+     result := (Usuario = userAdmin) and (Senha = senhaAdmin);
+end;
+
+  var user, senha, opcaoDoUsuario: String;
+  i: integer;
+
+begin
+  try
+
+  MostrarMenu;
+  Readln(opcaoDoUsuario);
+  i := 0;
+  while True do begin
+
+     if not ((opcaoDoUsuario = '2') or (opcaoDoUsuario = '1')) then begin
+        MostrarMenu;
+      Readln(opcaoDoUsuario);
+     Continue;
+     end;
+
+
+  if (opcaoDoUsuario = '1') then begin
+
+   Writeln('Digite seu usuário');
+    Readln(user);
+   Writeln('Digite sua senha');
+    Readln(senha);
+
+  if LoginValido(user, senha) then begin
+  WriteLn('Login bem sucedido, bem vindo ao sistema.');
+  Sleep(1000);
+
+  //MENU SECUNDARIO
+
+
+  InteragirMenu2;
+  end else begin
+
+    WriteLn('Login ou senha invalidos...');
+    Sleep(1000);
+     i := i + 1;
+     if (i = 3) then begin
+     Writeln('Você efetuou muitas tentativas invalidas, encerrando sistema...');
+     sleep(1000);
+     Halt;
+     end;
+  end;
+
+  end else if(opcaoDoUsuario = '2') then begin
+
+    Writeln('Encerrando...');
+    Sleep(1000);
+    exit;
+
+  end;
+
+
+  end;
+
+
+
+  except
+    on E: Exception do
+      Writeln(E.ClassName, ': ', E.Message);
+  end;
+end.

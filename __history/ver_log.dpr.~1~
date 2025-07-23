@@ -1,0 +1,78 @@
+program ver_log;
+
+{$APPTYPE CONSOLE}
+
+{$R *.res}
+
+uses
+  System.SysUtils;
+
+const userAdmin: String = 'Admin';
+      senhaAdmin: String = 'Admin';
+
+procedure MostrarMenu;
+begin
+   Writeln('------- MENU -------');
+  Writeln('| 1 - Realizar Login |');
+  Writeln('| 2 - Sair           |');
+   Writeln('--------------------');
+  Writeln('Digite uma opção');
+end;
+
+function LoginValido(Usuario, Senha: String): Boolean;
+begin
+     result := (Usuario = userAdmin) and (Senha = senhaAdmin);
+end;
+
+  var user, senha, opcaoDoUsuario: String;
+
+
+begin
+  try
+
+  MostrarMenu;
+  Readln(opcaoDoUsuario);
+  while True do begin
+
+     if not ((opcaoDoUsuario = '2') or (opcaoDoUsuario = '1')) then begin
+        MostrarMenu;
+      Readln(opcaoDoUsuario);
+     Continue;
+     end;
+
+
+  if (opcaoDoUsuario = '1') then begin
+
+   Writeln('Digite seu usuário');
+    Readln(user);
+   Writeln('Digite sua senha');
+    Readln(senha);
+
+  if LoginValido(user, senha) then begin
+  WriteLn('Login bem sucedido, bem vindo ao sistema.');
+  ReadLn;
+  Exit;
+  end else begin
+
+    WriteLn('Login ou senha invalidos...');
+    Sleep(1000);
+    Continue;
+
+  end;
+
+  end else if (opcaoDoUsuario = '2') then begin
+
+    Writeln('Encerrando...');
+    Sleep(1000);
+    exit;
+
+  end;
+  end;
+
+
+
+  except
+    on E: Exception do
+      Writeln(E.ClassName, ': ', E.Message);
+  end;
+end.
